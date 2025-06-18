@@ -7,6 +7,19 @@ export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
+    prepareHeaders: (headers, { endpoint }) => {
+      if (endpoint !== "signIn" && endpoint !== "signUp") {
+        const token = localStorage.getItem("token");
+
+        console.log(token);
+
+        if (token) {
+          headers.set("Authorization", `Bearer ${token}`);
+        }
+      }
+
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getUsers: builder.query({
@@ -29,11 +42,13 @@ export const userApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
+          console.log(data);
+          localStorage.setItem("token", data.token);
           localStorage.setItem("profile", JSON.stringify({ ...data }));
 
           await dispatch(currentUserApi.endpoints.getMe.initiate(data.user.id));
         } catch (error) {
-          console.error(error);
+          console.error("Sign-in failed", error);
         }
       },
     }),

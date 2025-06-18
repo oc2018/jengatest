@@ -8,6 +8,14 @@ export const currentUserApi = createApi({
   reducerPath: `currentUserApi`,
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getMe: builder.query({
@@ -19,12 +27,13 @@ export const currentUserApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log(data);
           dispatch(setUser(data));
         } catch (error) {
-          console.error(error);
+          console.error("Failed to fetch current user", error);
         }
       },
     }),
   }),
 });
+
+export const { useGetMeQuery } = currentUserApi;

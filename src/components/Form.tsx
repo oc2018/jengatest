@@ -20,7 +20,7 @@ const Form = () => {
   const [formData, setFormData] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
   const [signup] = useSignUpMutation();
-  const [signin, isSuccess] = useSignInMutation();
+  const [signin] = useSignInMutation();
   const navigate = useNavigate();
 
   const handeleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,11 +29,10 @@ const Form = () => {
       if (isSignup) {
         signup(formData);
       } else {
-        const data = signin(formData);
-        console.log(data);
+        const payload = await signin(formData).unwrap();
+        console.log("Signin success payload", payload);
       }
-      console.log(isSuccess);
-      if (isSuccess) navigate("/dashboard");
+      navigate("/dashboard");
     } catch (error) {
       console.error(error);
     }

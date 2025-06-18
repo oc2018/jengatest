@@ -4,12 +4,12 @@ import userReducer from "../features/authSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { userApi } from "../services/userApi";
 import { currentUserApi } from "../services/currentUserApi";
+import { jengaApi } from "../services/jengaApi";
 
 //persistence
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
-import { jengaApi } from "../services/jengaApi";
 
 const persistConfig = {
   key: "root",
@@ -25,14 +25,14 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: {
-    userState: persistedReducer,
+    user: persistedReducer,
     [userApi.reducerPath]: userApi.reducer,
     [currentUserApi.reducerPath]: currentUserApi.reducer,
     [jengaApi.reducerPath]: jengaApi.reducer,
   },
 
-  middleware: (getDefaultMiddelware) =>
-    getDefaultMiddelware({
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
       serializableCheck: false,
     }).concat(
       userApi.middleware,
@@ -45,6 +45,6 @@ setupListeners(store.dispatch);
 
 export const persistor = persistStore(store);
 
+//types
 export type RootState = ReturnType<typeof store.getState>;
-
 export type AppDispatch = typeof store.dispatch;

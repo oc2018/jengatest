@@ -6,7 +6,7 @@ import { useGetBalanceQuery } from "../services/jengaApi";
 import { useState } from "react";
 
 const Dashboard = () => {
-  const { user } = useSelector((state: RootState) => state.userState);
+  const { user } = useSelector((state: RootState) => state.user);
 
   const initalData = { accountNumber: "" };
   const [formData, setFormData] = useState(initalData);

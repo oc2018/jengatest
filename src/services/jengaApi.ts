@@ -9,7 +9,7 @@ export const jengaApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).userState.user.token;
+      const token = (getState() as RootState).user.user.token;
 
       console.log(`jengaApi ${token}`);
 
