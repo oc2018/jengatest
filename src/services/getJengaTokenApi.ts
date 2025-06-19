@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setToken } from "../features/authSlice";
 
-const baseURL = import.meta.env.VITE_JENGA_ACCOUNT_API_URL;
+const baseURL = import.meta.env.VITE_JENGA_API_URL;
 const apiKey = import.meta.env.VITE_JENGA_API_KEY;
 const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
 const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
@@ -32,7 +32,7 @@ export const getJengaTokenApi = createApi({
           body: formData,
         };
       },
-      async onQueryStarted(_,{ dispatch, queryFulfilled }) {
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
 
@@ -53,5 +53,4 @@ export const getJengaTokenApi = createApi({
   }),
 });
 
-
-export const { useGetTokenMutation } = getJengaTokenApi
+export const { useGetTokenMutation } = getJengaTokenApi;

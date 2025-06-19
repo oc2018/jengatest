@@ -9,7 +9,7 @@ import type { RootState } from "../app/store";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 const apiBaseURL = import.meta.env.VITE_JENGA_ACCOUNT_API_URL;
-const authBaseURL = import.meta.env.VITE_JENGA_ACCOUNT_API_URL;
+const authBaseURL = import.meta.env.VITE_JENGA_API_URL;
 const apiKey = import.meta.env.VITE_JENGA_API_KEY;
 // const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
 // const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
@@ -73,12 +73,17 @@ export const baseQueryWithReauth: BaseQueryFn<
     );
 
     if (refreshResult.data) {
+      const data = refreshResult.data as {
+        token: string;
+        refreshToken: string;
+        expiresIn: number;
+      };
       //save updated
       api.dispatch(
         setToken({
-          token: refreshResult.data.token,
-          refreshToken: refreshResult.data.refreshToken,
-          expiresIn: refreshResult.data.expiresIn,
+          token: data.token,
+          refreshToken: data.refreshToken,
+          expiresIn: data.expiresIn,
         })
       );
 
