@@ -3,28 +3,11 @@ import type { RootState } from "../app/store";
 import { useSelector } from "react-redux";
 import Logout from "../components/logout";
 import { useGetBalanceQuery } from "../services/jengaApi";
-import { useEffect } from "react";
-import { useGetTokenMutation } from "../services/getJengaTokenApi";
-
-const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
-const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
 
 const Dashboard = () => {
   const { user } = useSelector((state: RootState) => state.user);
-  const [getToken] = useGetTokenMutation();
-  const token = useSelector(
-    (state: RootState) => state.user.user.jengaToken.token
-  );
 
   // const initalData = { accountNumber: "" };
-
-  const formData = new FormData();
-  formData.append("merchantCode", merchantCode);
-  formData.append("consumerSecret", consumerSecret);
-
-  useEffect(() => {
-    if (!token) getToken(formData);
-  }, [token]);
 
   console.log(user);
 
