@@ -21,7 +21,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
     console.log(`state ${state}`);
-    const token = (getState() as RootState).user.user.jengaToken?.token;
+    const token = (getState() as RootState).user.user.jengaToken.token;
 
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
