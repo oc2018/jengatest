@@ -20,7 +20,7 @@ export const currentUserApi = createApi({
   endpoints: (builder) => ({
     getMe: builder.query({
       query: (id) => ({
-        url: `/users/${id}`,
+        url: `/api/users/${id}`,
         method: `GET`,
       }),
 
