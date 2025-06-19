@@ -23,18 +23,18 @@ export const userApi = createApi({
   }),
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => `/users`,
+      query: () => `/api/users`,
     }),
     signUp: builder.mutation({
       query: (formData) => ({
-        url: `/users/signup`,
+        url: `/api/users/signup`,
         method: `POST`,
         body: formData,
       }),
     }),
     signIn: builder.mutation({
       query: (formData) => ({
-        url: `/users/signin`,
+        url: `/api/users/signin`,
         method: `POST`,
         body: formData,
       }),
