@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export interface UserState {
   user: {
@@ -6,12 +6,16 @@ export interface UserState {
     email: string;
     _id: string;
   };
-  token: string;
+  jengaToken: {
+    token: string | null;
+    refreshToken: string | null;
+    expiresAt: number | null;
+  };
 }
 
 const initialState: UserState = {
   user: { name: "", email: "", _id: "" },
-  token: "",
+  jengaToken: { token: null, refreshToken: null, expiresAt: null },
 };
 
 export const userSlice = createSlice({
@@ -25,8 +29,17 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    setToken: (state, action) => {
-      state.token = action.payload;
+    setToken: (
+      state,
+      action: PayloadAction<{
+        token: string;
+        refreshToken: string;
+        expiresIn: number;
+      }>
+    ) => {
+      state.jengaToken.token = action.payload.token;
+      state.jengaToken.refreshToken = action.payload.refreshToken;
+      state.jengaToken.expiresAt = action.payload.expiresIn;
     },
   },
 });

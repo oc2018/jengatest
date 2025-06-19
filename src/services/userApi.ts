@@ -11,8 +11,6 @@ export const userApi = createApi({
       if (endpoint !== "signIn" && endpoint !== "signUp") {
         const token = localStorage.getItem("token");
 
-        console.log(token);
-
         if (token) {
           headers.set("Authorization", `Bearer ${token}`);
         }
@@ -42,7 +40,6 @@ export const userApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log(data);
           localStorage.setItem("token", data.token);
           localStorage.setItem("profile", JSON.stringify({ ...data }));
 

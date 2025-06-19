@@ -6,6 +6,8 @@ const apiKey = import.meta.env.VITE_JENGA_API_KEY;
 const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
 const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
 
+console.log("token generation");
+
 export const getJengaTokenApi = createApi({
   reducerPath: "getJengaTokenApi",
   baseQuery: fetchBaseQuery({
@@ -30,13 +32,19 @@ export const getJengaTokenApi = createApi({
           body: formData,
         };
       },
-      async onQueryStarted({ dispatch, queryFulfilled }) {
+      async onQueryStarted(_,{ dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
 
           console.log(`jengaToken: ${data}`);
 
-          dispatch(setToken(data));
+          dispatch(
+            setToken({
+              token: data.token,
+              refreshToken: data.refreshToken,
+              expiresIn: data.expiresIn,
+            })
+          );
         } catch (error) {
           console.error(error);
         }
@@ -44,3 +52,6 @@ export const getJengaTokenApi = createApi({
     }),
   }),
 });
+
+
+export const { useGetTokenMutation } = getJengaTokenApi

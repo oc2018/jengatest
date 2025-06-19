@@ -1,27 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { RootState } from "../app/store";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from "./baseQueryWithReauth";
 
-const baseURL = import.meta.env.VITE_JENGA_ACCOUNT_API_URL;
-const apiKey = import.meta.env.VITE_JENGA_API_KEY;
+// const baseURL = import.meta.env.VITE_JENGA_ACCOUNT_API_URL;
 
 export const jengaApi = createApi({
   reducerPath: "jengaApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: baseURL,
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).user.user.token;
-
-      console.log(`jengaApi ${token}`);
-
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      headers.set("Content-Type", "application/json");
-      headers.set("Api-Key", apiKey);
-
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getBalance: builder.query({
       query: () => ({
