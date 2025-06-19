@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { RootState } from "../app/store";
 
-const baseURL = import.meta.env.VITE_JENGA_API_URL;
+const baseURL = import.meta.env.VITE_JENGA_ACCOUNT_API_URL;
 const apiKey = import.meta.env.VITE_JENGA_API_KEY;
 
 export const jengaApi = createApi({
