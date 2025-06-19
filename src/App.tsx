@@ -13,7 +13,7 @@ const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
 function App() {
   const [getToken] = useGetTokenMutation();
   const token = useSelector(
-    (state: RootState) => state.user.user.jengaToken.token
+    (state: RootState) => state.user.user.jengaToken?.token
   );
 
   const formData = new FormData();

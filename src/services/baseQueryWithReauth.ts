@@ -19,7 +19,7 @@ console.log("token generation");
 const baseQuery = fetchBaseQuery({
   baseUrl: apiBaseURL,
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).user.user.jengaToken.token;
+    const token = (getState() as RootState).user.user.jengaToken?.token;
 
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
