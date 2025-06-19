@@ -3,8 +3,8 @@ import { setToken } from "../features/authSlice";
 
 const baseURL = import.meta.env.VITE_JENGA_API_URL;
 const apiKey = import.meta.env.VITE_JENGA_API_KEY;
-const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
-const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
+// const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
+// const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
 
 console.log("getToken slice: token generation");
 
@@ -21,10 +21,10 @@ export const getJengaTokenApi = createApi({
   }),
   endpoints: (builder) => ({
     getToken: builder.mutation({
-      query: () => {
-        const formData = new FormData();
-        formData.append("merchantCode", merchantCode);
-        formData.append("consumerSecret", consumerSecret);
+      query: (formData) => {
+        // const formData = new FormData();
+        // formData.append("merchantCode", merchantCode);
+        // formData.append("consumerSecret", consumerSecret);
 
         return {
           url: `/authenticate/merchant`,
@@ -32,7 +32,7 @@ export const getJengaTokenApi = createApi({
           body: formData,
         };
       },
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
 
