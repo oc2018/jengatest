@@ -6,7 +6,7 @@ const apiKey = import.meta.env.VITE_JENGA_API_KEY;
 const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
 const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
 
-console.log("token generation");
+console.log("getToken slice: token generation");
 
 export const getJengaTokenApi = createApi({
   reducerPath: "getJengaTokenApi",
