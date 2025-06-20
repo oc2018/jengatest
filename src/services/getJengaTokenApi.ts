@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setToken } from "../features/authSlice";
 
-const baseURL = import.meta.env.VITE_JENGA_API_URL;
-const apiKey = import.meta.env.VITE_JENGA_API_KEY;
+const baseURL = import.meta.env.VITE_BASE_URL;
+// const apiKey = import.meta.env.VITE_JENGA_API_KEY;
 // const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
 // const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
 
@@ -12,24 +12,23 @@ export const getJengaTokenApi = createApi({
   reducerPath: "getJengaTokenApi",
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
-    prepareHeaders: (headers) => {
-      headers.set("Content-Type", "application/json");
-      headers.set("Api-Key", apiKey);
+    // prepareHeaders: (headers) => {
+    //   headers.set("Content-Type", "application/json");
+    //   headers.set("Api-Key", apiKey);
 
-      return headers;
-    },
+    //   return headers;
+    // },
   }),
   endpoints: (builder) => ({
     getToken: builder.mutation({
-      query: (formData) => {
+      query: () => {
         // const formData = new FormData();
         // formData.append("merchantCode", merchantCode);
         // formData.append("consumerSecret", consumerSecret);
 
         return {
-          url: `/authenticate/merchant`,
+          url: `api/jenga/token`,
           method: "POST",
-          body: formData,
         };
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
@@ -46,7 +45,7 @@ export const getJengaTokenApi = createApi({
             })
           );
         } catch (error) {
-          console.error(error);
+          console.error("Token fetch failed", error);
         }
       },
     }),

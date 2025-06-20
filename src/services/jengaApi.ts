@@ -8,8 +8,8 @@ export const jengaApi = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     getBalance: builder.query({
-      query: () => ({
-        url: `accounts/balances/KE/1100194977404`,
+      query: (formData) => ({
+        url: `api/jenga/accounts/balances/${formData}`,
         method: "GET",
       }),
     }),
