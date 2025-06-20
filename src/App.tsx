@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     if (!token) getToken(formData);
-  }, []);
+  }, [token]);
 
   return (
     <div className="">
