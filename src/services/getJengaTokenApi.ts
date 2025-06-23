@@ -2,46 +2,29 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setToken } from "../features/authSlice";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
-// const apiKey = import.meta.env.VITE_JENGA_API_KEY;
-// const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
-// const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
-
-console.log("getToken slice: token generation");
 
 export const getJengaTokenApi = createApi({
   reducerPath: "getJengaTokenApi",
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
-    // prepareHeaders: (headers) => {
-    //   headers.set("Content-Type", "application/json");
-    //   headers.set("Api-Key", apiKey);
-
-    //   return headers;
-    // },
   }),
   endpoints: (builder) => ({
-    getToken: builder.mutation({
+    getToken: builder.query({
       query: () => {
-        // const formData = new FormData();
-        // formData.append("merchantCode", merchantCode);
-        // formData.append("consumerSecret", consumerSecret);
-
         return {
           url: `api/jenga/token`,
-          method: "POST",
+          method: "GET",
         };
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-
-          console.log(`jengaToken: ${data}`);
+          const data = await queryFulfilled;
 
           dispatch(
             setToken({
-              token: data.token,
-              refreshToken: data.refreshToken,
-              expiresIn: data.expiresIn,
+              token: data.data.accessToken,
+              refreshToken: data.data.refreshToken,
+              expiresIn: data.data.expiresIn,
             })
           );
         } catch (error) {
@@ -52,4 +35,4 @@ export const getJengaTokenApi = createApi({
   }),
 });
 
-export const { useGetTokenMutation } = getJengaTokenApi;
+export const { useGetTokenQuery } = getJengaTokenApi;

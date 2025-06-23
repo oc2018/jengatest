@@ -29,8 +29,8 @@ const Form = () => {
       if (isSignup) {
         signup(formData);
       } else {
-        const payload = await signin(formData).unwrap();
-        console.log("Signin success payload", payload);
+        await signin(formData).unwrap();
+        // console.log("Signin success payload", payload);
       }
       navigate("/dashboard");
     } catch (error) {

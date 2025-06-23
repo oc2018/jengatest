@@ -1,18 +1,22 @@
-// import { useGetUsersQuery } from "../services/userApi";
-import type { RootState } from "../app/store";
-import { useSelector } from "react-redux";
+import { useGetUsersQuery } from "../services/userApi";
+// import type { RootState } from "../app/store";
+// import { useSelector } from "react-redux";
 import Logout from "../components/logout";
-import { useGetBalanceQuery } from "../services/jengaApi";
+// import { useGetTokenQuery } from "../services/getJengaTokenApi";
+// import { useGetBalanceQuery } from "../services/jengaApi";
 
 const Dashboard = () => {
-  const { user } = useSelector((state: RootState) => state.user);
+  // const { user } = useSelector((state: RootState) => state.user);
 
   // const initalData = { accountNumber: "" };
 
-  console.log(user);
+  // console.log(user);
 
-  // const { data, error, isLoading } = useGetUsersQuery([]);
-  const { data } = useGetBalanceQuery([]);
+  const { data } = useGetUsersQuery([]);
+  // const { data } = useGetBalanceQuery([]);
+
+  // const [result] = useGetTokenMutation();
+  // const { data } = useGetTokenQuery([]);
 
   // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   //   e.preventDefault();

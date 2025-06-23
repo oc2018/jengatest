@@ -8,30 +8,24 @@ import { setToken, logout } from "../features/authSlice";
 import type { RootState } from "../app/store";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
-const apiBaseURL = import.meta.env.VITE_JENGA_ACCOUNT_API_URL;
-const authBaseURL = import.meta.env.VITE_JENGA_API_URL;
-const apiKey = import.meta.env.VITE_JENGA_API_KEY;
-// const merchantCode = import.meta.env.VITE_JENGA_MERCHANT_CODE;
-// const consumerSecret = import.meta.env.VITE_JENGA_CUSTOMER_SECRET;
-
-console.log("token generation");
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: apiBaseURL,
-  prepareHeaders: (headers, { getState }) => {
-    const state = getState() as RootState;
-    console.log(`state ${state}`);
-    const token = (getState() as RootState).user.user.jengaToken.token;
+  baseUrl: baseURL,
+  // prepareHeaders: (headers, { getState }) => {
+  //   const state = getState() as RootState;
+  //   console.log(`state ${state}`);
+  //   const token = (getState() as RootState).user.user.jengaToken.token;
 
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
-    }
+  //   if (token) {
+  //     headers.set("Authorization", `Bearer ${token}`);
+  //   }
 
-    headers.set("Api-key", apiKey);
-    headers.set("Content-Type", "applicatio/json");
+  //   headers.set("Api-key", apiKey);
+  //   headers.set("Content-Type", "applicatio/json");
 
-    return headers;
-  },
+  //   return headers;
+  // },
 });
 
 //wraper with re-auth
@@ -57,16 +51,16 @@ export const baseQueryWithReauth: BaseQueryFn<
     //refresh
 
     const refreshBaseQuery = fetchBaseQuery({
-      baseUrl: authBaseURL,
-      headers: {
-        "Api-Key": apiKey,
-        "Content-Type": "application/json",
-      },
+      baseUrl: baseURL,
+      // headers: {
+      //   "Api-Key": apiKey,
+      //   "Content-Type": "application/json",
+      // },
     });
 
     const refreshResult = await refreshBaseQuery(
       {
-        url: "/authenticate/refresh",
+        url: "api/jenga/refreshtoken",
         method: "POST",
         body: { refreshToken },
       },
