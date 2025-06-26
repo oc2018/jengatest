@@ -1,8 +1,8 @@
-import { useGetUsersQuery } from "../services/userApi";
+// import { useGetUsersQuery } from "../services/userApi";
 // import type { RootState } from "../app/store";
 // import { useSelector } from "react-redux";
 import Logout from "../components/logout";
-// import { useGetTokenQuery } from "../services/getJengaTokenApi";
+import { useGetTokenQuery } from "../services/getJengaTokenApi";
 // import { useGetBalanceQuery } from "../services/jengaApi";
 
 const Dashboard = () => {
@@ -12,11 +12,11 @@ const Dashboard = () => {
 
   // console.log(user);
 
-  const { data } = useGetUsersQuery([]);
+  // const { data } = useGetUsersQuery([]);
   // const { data } = useGetBalanceQuery([]);
 
   // const [result] = useGetTokenMutation();
-  // const { data } = useGetTokenQuery([]);
+  const { data } = useGetTokenQuery([]);
 
   // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   //   e.preventDefault();
@@ -26,7 +26,7 @@ const Dashboard = () => {
   // if (isLoading) return <div>Loading...</div>;
   // if (error) return <div>Error: error</div>;
 
-  console.log(data);
+  console.log(data?.accessToken);
   return (
     <div>
       <Logout />
