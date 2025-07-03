@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSignUpMutation, useSignInMutation } from "../services/userApi";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 
 interface User {
   name: string;
@@ -32,14 +33,14 @@ const Form = () => {
         await signin(formData).unwrap();
         // console.log("Signin success payload", payload);
       }
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div className="">
+    <div className="flex flex-col max-w-3xl">
       <form onSubmit={handeleSubmit}>
         {isSignup && (
           <input
@@ -79,15 +80,19 @@ const Form = () => {
           />
         )}
 
-        <button className="w-full border-gray-600 border my-3 p-2 rounded-lg">
+        <Button className="w-full bg-primary p-2 rounded-lg">
           {isSignup ? "Save Details" : "Login"}
-        </button>
+        </Button>
       </form>
-      <button className="w-full" onClick={() => setIsSignup((prev) => !prev)}>
+      <Button
+        variant="ghost"
+        className="w-full"
+        onClick={() => setIsSignup((prev) => !prev)}
+      >
         {isSignup
           ? `Already have an account, Login`
           : `Don't have an account, SignUp `}
-      </button>
+      </Button>
     </div>
   );
 };

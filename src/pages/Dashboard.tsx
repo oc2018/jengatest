@@ -1,7 +1,7 @@
 // import { useGetUsersQuery } from "../services/userApi";
 // import type { RootState } from "../app/store";
 // import { useSelector } from "react-redux";
-import Logout from "../components/logout";
+// import Logout from "../components/logout";
 import { useGetTokenQuery } from "../services/getJengaTokenApi";
 // import { useGetBalanceQuery } from "../services/jengaApi";
 
@@ -28,20 +28,14 @@ const Dashboard = () => {
 
   console.log(data?.accessToken);
   return (
-    <div>
-      <Logout />
-      <form className="w-full">
-        {/* <input
-          placeholder="Account Number"
-          className="w-full border border-gray-400 rounded-xl px-3 py-2 mb-3"
-          value={formData.accountNumber}
-          onChange={(e) =>
-            setFormData({ ...formData, accountNumber: e.target.value })
-          }
-        /> */}
-        <button className="w-full">check balance</button>
-      </form>
-    </div>
+    <section className="page-section">
+      <div className="">
+        <h2 className="text-xl font-semibold">Dashboard</h2>
+      </div>
+      <div className="body-text">
+        <p>text body</p>
+      </div>
+    </section>
   );
 };
 
