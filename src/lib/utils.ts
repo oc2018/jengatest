@@ -36,3 +36,13 @@ export const sidebarLinks: SidebarLink[] = [
   { route: "/bank", icon: "BankIcon", text: "Bank" },
   { route: "/expenses", icon: "ExpensesIcon", text: "Expenses" },
 ];
+
+export function cleanData<T extends object>(obj: T): Partial<T> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+  const { createdAt, _id, __v, updatedAt, ...rest } = obj as any;
+  return rest;
+}
+
+export const capitalize = (text: string) => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};

@@ -11,6 +11,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import { getJengaTokenApi } from "../services/getJengaTokenApi";
+import { tenantApi } from "@/services/tenantsApi";
+import { propertiesApi } from "@/services/propertiesApi";
 
 const persistConfig = {
   key: "root",
@@ -31,6 +33,8 @@ export const store = configureStore({
     [currentUserApi.reducerPath]: currentUserApi.reducer,
     [jengaApi.reducerPath]: jengaApi.reducer,
     [getJengaTokenApi.reducerPath]: getJengaTokenApi.reducer,
+    [tenantApi.reducerPath]: tenantApi.reducer,
+    [propertiesApi.reducerPath]: propertiesApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -40,7 +44,9 @@ export const store = configureStore({
       userApi.middleware,
       currentUserApi.middleware,
       jengaApi.middleware,
-      getJengaTokenApi.middleware
+      getJengaTokenApi.middleware,
+      tenantApi.middleware,
+      propertiesApi.middleware
     ),
 });
 

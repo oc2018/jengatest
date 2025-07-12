@@ -10,7 +10,7 @@ interface User {
   confirmPassword?: string;
 }
 
-const Form = () => {
+const AuthForm = () => {
   const initialState: User = {
     name: "",
     email: "",
@@ -97,4 +97,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default AuthForm;

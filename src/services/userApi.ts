@@ -19,6 +19,7 @@ export const userApi = createApi({
       return headers;
     },
   }),
+
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => `/api/users`,

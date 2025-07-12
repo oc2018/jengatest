@@ -3,18 +3,35 @@ import { useSelector } from "react-redux";
 import Logout from "./logout";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import Search from "./Search";
+const secret = import.meta.env.JWT_SECRET;
+
+interface JwtPayload {
+  name: string;
+  exp: number;
+  iat: number;
+  userId: string;
+  email: string;
+}
 
 const Header = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
-
-  console.log(user);
+  const token = localStorage.getItem("token");
+  const nowSec = Math.floor(Date.now() / 1000);
 
   useEffect(() => {
-    if (!user?.user.name) {
+    if (!token) {
       navigate("/auth");
+    } else {
+      const decodedToken = jwtDecode<JwtPayload>(token, secret);
+      // console.log(decodedToken.exp, nowSec);
+      if (nowSec > decodedToken.exp!) {
+        navigate("/auth");
+      }
     }
-  }, [user, navigate]);
+  }, [token, nowSec, navigate]);
 
   return (
     <header className="header">
@@ -25,8 +42,8 @@ const Header = () => {
         <p className="text-base text-slate-500">Monitor your tenants here</p>
       </div>
       <div>
-        <div className="flex gap-3 justify-center items-center">
-          {/* <Search /> */}
+        <div className="flex gap-5 justify-center items-center">
+          <Search />
 
           <Logout />
         </div>

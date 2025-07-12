@@ -8,8 +8,10 @@ const Sidebar = () => {
     <div className="sidebar">
       <div>
         <div className="logo flex flex-col items-center">
-          <h1 className="text-4xl">Miles</h1>
-          <p className="md:flex hidden">Limited</p>
+          <h1 className="text-4xl font-bold">
+            E<span className="max-md:hidden">mirl</span>
+          </h1>
+          <p className="md:flex hidden">Builders</p>
         </div>
       </div>
       <div className="flex flex-col gap-5">
@@ -40,7 +42,7 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </div>
-      <div className="flex flex-row items-center rounded-full justify-center gap-2 border p-1 pr-4 cursor-pointer border-blue-200">
+      <div className="flex flex-row items-center rounded-full justify-center gap-2 border p-1 max-md:pr-0 pr-4 cursor-pointer border-blue-200">
         <NavLink to={"/profile"}>
           <Avatar className="bg-primary/20 ">
             {/* <AvatarImage src=""/> */}

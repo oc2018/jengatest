@@ -3,6 +3,11 @@ import { Routes, Route } from "react-router-dom";
 import Auth from "./pages/Auth";
 import Layout from "./pages/Layout";
 import Dashboard from "./pages/Dashboard";
+import Expenses from "./pages/Expenses";
+import Transactions from "./pages/Transactions";
+import Bank from "./pages/Bank";
+import Properties from "./pages/Properties";
+import Tenants from "./pages/Tenants";
 
 function App() {
   return (
@@ -10,6 +15,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/bank" element={<Bank />} />
+          <Route path="/properties" element={<Properties />} />
+          <Route path="/tenants" element={<Tenants />} />
         </Route>
         <Route path="/auth" element={<Auth />} />
       </Routes>
