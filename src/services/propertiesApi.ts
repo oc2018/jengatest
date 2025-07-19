@@ -22,6 +22,20 @@ export const propertiesApi = createApi({
       query: () => `/api/properties`,
       providesTags: ["Property"],
     }),
+
+    getProperty: builder.query({
+      query: (id) => `/api/properties/${id}`,
+    }),
+
+    GetPropertiesByIds: builder.query<Property[], string[]>({
+      queryFn: async (ids, _queryApi, _extra, baseQuery) => {
+        const results = await Promise.all(
+          ids.map((id) => baseQuery({ url: `/api/properties/${id}` }))
+        );
+        return { data: results.map((r) => r.data as Property) };
+      },
+    }),
+
     createProperty: builder.mutation<Property, { propertyData: Property }>({
       query: ({ propertyData }) => ({
         url: `/api/properties`,
@@ -30,6 +44,7 @@ export const propertiesApi = createApi({
       }),
       invalidatesTags: ["Property"],
     }),
+
     updateProperties: builder.mutation<
       Property,
       { id: string; propertyData: Property }
@@ -41,6 +56,10 @@ export const propertiesApi = createApi({
       }),
       invalidatesTags: ["Property"],
     }),
+
+    deleteProperty: builder.mutation({
+      query: (id) => `/api/properties/${id}`,
+    }),
   }),
 });
 
@@ -48,4 +67,6 @@ export const {
   useGetPropertiesQuery,
   useUpdatePropertiesMutation,
   useCreatePropertyMutation,
+  useGetPropertyQuery,
+  useGetPropertiesByIdsQuery,
 } = propertiesApi;

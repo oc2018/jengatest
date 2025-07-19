@@ -17,9 +17,11 @@ interface User {
 type Tenant = {
   name: string;
   email: string;
+  idNumber: string;
   phoneNumber: string;
   property: string;
-  _id: string;
+  propertyAddress?: string;
+  _id?: string;
 };
 
 type Property = {
@@ -29,3 +31,29 @@ type Property = {
   status: string;
   _id: string;
 };
+
+type Txn = {
+  txnID: number;
+  accountType: string;
+  amount: number;
+  propertyId: string;
+  tenantId: string;
+  propertyAddress: string;
+  tenantName: string;
+  _id: string;
+  createdAt: string;
+};
+
+type Expense = {
+  description: string;
+  amount: number;
+  pettyCashNo: number;
+  createdAt: string;
+  property: string;
+  propertyAddress?: string;
+  _id: string;
+};
+
+type DisplayMode = "symbol" | "code" | "name" | "none" | "narrowSymbol";
+
+type Style = "decimal" | "currency" | "percent";

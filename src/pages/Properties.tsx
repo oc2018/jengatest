@@ -3,6 +3,7 @@ import DataTable from "@/components/tables/DataTable";
 import { useGetPropertiesQuery } from "@/services/propertiesApi";
 import Loading from "./Loading";
 import CreateNewModal from "@/components/CreateNewModal";
+import Error from "./Error";
 
 const Properties = () => {
   const formInitialState = {
@@ -15,14 +16,14 @@ const Properties = () => {
   return (
     <section className="page-section">
       <div className="flex flex-row w-full justify-between ">
-        <h2 className="text-xl font-semibold">Properties</h2>
+        <h2 className="text-xl font-semibold text-primary">Properties</h2>
         <CreateNewModal title="Property" formInitialState={formInitialState} />
       </div>
       <div className="body-text">
         {isError ? (
-          <>404</>
-        ) : isLoading ? (
-          <Loading />
+          <Error />
+        ) : isLoading || !data.length ? (
+          <Loading title="" />
         ) : (
           <DataTable columns={propertiesColumns} data={data} />
         )}

@@ -13,6 +13,8 @@ import { combineReducers } from "redux";
 import { getJengaTokenApi } from "../services/getJengaTokenApi";
 import { tenantApi } from "@/services/tenantsApi";
 import { propertiesApi } from "@/services/propertiesApi";
+import { expensesApi } from "@/services/expensesApi";
+import { txnsApi } from "@/services/txnsApi";
 
 const persistConfig = {
   key: "root",
@@ -35,6 +37,8 @@ export const store = configureStore({
     [getJengaTokenApi.reducerPath]: getJengaTokenApi.reducer,
     [tenantApi.reducerPath]: tenantApi.reducer,
     [propertiesApi.reducerPath]: propertiesApi.reducer,
+    [expensesApi.reducerPath]: expensesApi.reducer,
+    [txnsApi.reducerPath]: txnsApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -46,7 +50,9 @@ export const store = configureStore({
       jengaApi.middleware,
       getJengaTokenApi.middleware,
       tenantApi.middleware,
-      propertiesApi.middleware
+      propertiesApi.middleware,
+      expensesApi.middleware,
+      txnsApi.middleware
     ),
 });
 

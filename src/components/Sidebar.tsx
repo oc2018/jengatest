@@ -9,12 +9,12 @@ const Sidebar = () => {
       <div>
         <div className="logo flex flex-col items-center">
           <h1 className="text-4xl font-bold">
-            E<span className="max-md:hidden">mirl</span>
+            E<span className="max-md:hidden leanding-0">mirl</span>
           </h1>
-          <p className="md:flex hidden">Builders</p>
+          <p className="md:flex hidden leading-0">Builders</p>
         </div>
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-3">
         {sidebarLinks.map((link) => (
           <NavLink
             key={link.route}

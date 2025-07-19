@@ -1,6 +1,8 @@
 import Action from "@/components/Action";
 import DeleteButton from "@/components/DeleteButton";
+import { formatCurrency } from "@/lib/utils";
 import type { CellContext, ColumnDef } from "@tanstack/react-table";
+import clsx from "clsx";
 
 export const propertiesColumns: ColumnDef<Property>[] = [
   {
@@ -8,7 +10,7 @@ export const propertiesColumns: ColumnDef<Property>[] = [
     cell: ({ row }) => <div className="text-14-medium">{row.index + 1}</div>,
   },
   {
-    header: "Address",
+    header: "House Number",
     accessorKey: "address",
     cell: ({ row }) => (
       <div className="text-14-medium">{row.original.address}</div>
@@ -18,22 +20,40 @@ export const propertiesColumns: ColumnDef<Property>[] = [
     header: "Rent",
     accessorKey: "rent",
     cell: ({ row }) => (
-      <div className="text-14-medium">{row.original.rent}</div>
+      <div className="text-14-medium text-right pr-3">
+        {formatCurrency(row.original.rent, "narrowSymbol", "decimal")}
+      </div>
     ),
   },
   {
     header: "Deposit",
     accessorKey: "deposit",
     cell: ({ row }) => (
-      <div className="text-14-medium">{row.original.deposit}</div>
+      <div className="text-14-medium text-right pr-3">
+        {formatCurrency(row.original.deposit, "narrowSymbol", "decimal")}
+      </div>
     ),
   },
   {
     header: "Status",
     accessorKey: "status",
-    cell: ({ row }) => (
-      <div className="text-14-medium">{row.original.status}</div>
-    ),
+    cell: ({ row }) => {
+      const status = row.original.status;
+      return (
+        <div
+          className={clsx(
+            {
+              "text-green-600": status === "Available",
+              "text-orange-400": status === "Occupied",
+              "text-red-400": status === "Vacant",
+            },
+            "text-14-medium"
+          )}
+        >
+          {row.original.status}
+        </div>
+      );
+    },
   },
   {
     header: "Actions",

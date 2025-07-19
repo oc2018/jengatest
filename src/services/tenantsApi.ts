@@ -22,10 +22,21 @@ export const tenantApi = createApi({
       query: () => `/api/tenants`,
       providesTags: ["Tenant"],
     }),
-    getTentant: builder.query({
+    getTentant: builder.query<Tenant, void>({
       query: (id) => `/api/tenants/${id}`,
     }),
-    createTenant: builder.mutation({
+
+    getTenantsByIds: builder.query<Tenant[], string[]>({
+      queryFn: async (ids, _queryApi, _extra, baseQuery) => {
+        const result = await Promise.all(
+          ids.map((id) => baseQuery({ url: `/api/tenants/${id}` }))
+        );
+
+        return { data: result.map((t) => t.data as Tenant) };
+      },
+    }),
+
+    createTenant: builder.mutation<Tenant, { formData: Tenant }>({
       query: (formData) => ({
         url: `api/tenants`,
         method: `POST`,
@@ -33,6 +44,7 @@ export const tenantApi = createApi({
       }),
       invalidatesTags: ["Tenant"],
     }),
+
     updateTenant: builder.mutation<Tenant, { id: string; tenantData: Tenant }>({
       query: ({ id, tenantData }) => ({
         url: `/api/tenants/${id}`,
@@ -41,7 +53,8 @@ export const tenantApi = createApi({
       }),
       invalidatesTags: ["Tenant"],
     }),
-    deleteTenant: builder.mutation({
+
+    deleteTenant: builder.mutation<Tenant, { id: string }>({
       query: (id) => ({
         url: `/api/tenants/${id}`,
         method: "DELETE",
@@ -57,4 +70,5 @@ export const {
   useUpdateTenantMutation,
   useDeleteTenantMutation,
   useCreateTenantMutation,
+  useGetTenantsByIdsQuery,
 } = tenantApi;

@@ -60,44 +60,6 @@ const DetailsModal = ({
         Update
       </Button>
     </form>
-    // <form className="flex flex-col w-full p-3 gap-4" onSubmit={handleSubmit}>
-    //   <div className="flex max-md:flex-row">
-    //     <p className="w-1/4">Name:</p>
-    //     <Input
-    //       type="text"
-    //       className="border border-light-100 bg-dark-300 text-light-400"
-    //       value={tenantData.name}
-    //       onChange={(e) =>
-    //         setTenantData({ ...tenantData, name: e.target.value })
-    //       }
-    //     />
-    //   </div>
-    //   <div className="flex max-md:flex-row">
-    //     <p className="w-1/4">Email:</p>
-    //     <Input
-    //       type="email"
-    //       className="border border-light-100 bg-dark-300 text-light-400"
-    //       value={tenantData.email}
-    //       onChange={(e) =>
-    //         setTenantData({ ...tenantData, email: e.target.value })
-    //       }
-    //     />
-    //   </div>
-    //   <div className="flex max-md:flex-row">
-    //     <p className="w-1/4">Phone number:</p>
-    //     <Input
-    //       type="phone"
-    //       className="border border-light-100 bg-dark-300 text-light-400"
-    //       value={tenantData.phoneNumber}
-    //       onChange={(e) =>
-    //         setTenantData({ ...tenantData, phoneNumber: e.target.value })
-    //       }
-    //     />
-    //   </div>
-    //   <Button className="text-white font-bold mt-3 cursor-pointer w-full">
-    //     Edit
-    //   </Button>
-    // </form>
   );
 };
 

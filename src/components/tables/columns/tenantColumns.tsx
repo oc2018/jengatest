@@ -16,10 +16,17 @@ export const tenantColumns: ColumnDef<Tenant>[] = [
     ),
   },
   {
-    accessorKey: "property",
+    header: "ID Number",
+    accessorKey: "idNumber",
+    cell: ({ row }) => (
+      <div className="text-14-medium">{row.original.idNumber}</div>
+    ),
+  },
+  {
+    accessorKey: "propertyAddress",
     header: "Property",
     cell: ({ row }) => (
-      <div className="text-14-medium">{row.original.property}</div>
+      <div className="text-14-medium">{row.original.propertyAddress}</div>
     ),
   },
   {

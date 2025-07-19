@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import DashIcon from "@/icons/dashboard.svg?react";
@@ -38,11 +40,62 @@ export const sidebarLinks: SidebarLink[] = [
 ];
 
 export function cleanData<T extends object>(obj: T): Partial<T> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-  const { createdAt, _id, __v, updatedAt, ...rest } = obj as any;
+  const { createdAt, _id, __v, updatedAt, propertyAddress, ...rest } =
+    obj as any;
   return rest;
 }
 
 export const capitalize = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
+};
+
+export const formatCurrency = (
+  amount: number,
+  display: DisplayMode = "none",
+  style: Style,
+  options?: Intl.NumberFormatOptions
+): string => {
+  if (display === "none") {
+    const num = new Intl.NumberFormat("en-KE", options).format(amount);
+
+    return num;
+  }
+
+  return new Intl.NumberFormat("en-KE", {
+    style,
+    currency: style === "currency" ? "KES" : undefined,
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+    currencyDisplay:
+      display === "symbol" || display === "narrowSymbol"
+        ? display
+        : (display as "code" | "name"),
+    ...options,
+  }).format(amount);
+};
+
+export const formatDate = (
+  date: Date | string | number,
+  locale: string = "en-KE",
+  options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }
+): string => {
+  const dt =
+    typeof date === "string" || typeof date === "number"
+      ? new Date(date)
+      : date;
+
+  return new Intl.DateTimeFormat(locale, options).format(dt);
+};
+
+export const formatDateISO = (date: Date | string | number): string => {
+  const dt =
+    typeof date === "string" || typeof date === "number"
+      ? new Date(date)
+      : date;
+
+  return dt.toISOString().split("T")[0];
 };
