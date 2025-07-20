@@ -8,6 +8,7 @@ import PropertiesIcon from "@/icons/properties.svg?react";
 import TxnsIcon from "@/icons/txns.svg?react";
 import BankIcon from "@/icons/bank.svg?react";
 import ExpensesIcon from "@/icons/expenses.svg?react";
+import React, { useContext } from "react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -99,3 +100,9 @@ export const formatDateISO = (date: Date | string | number): string => {
 
   return dt.toISOString().split("T")[0];
 };
+
+export const ConfirmContext = React.createContext<
+  (opts: { title: string; description: string }) => Promise<boolean>
+>(async () => false);
+
+export const useConfirm = () => useContext(ConfirmContext);

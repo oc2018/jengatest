@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import DataTable from "@/components/tables/DataTable";
 import { expensesColumns } from "@/components/tables/columns/expensesColumns";
 import { useGetPropertiesByIdsQuery } from "@/services/propertiesApi";
+import { skipToken } from "@reduxjs/toolkit/query/react";
 
 const Expenses = () => {
   const formInitialState = {
@@ -19,14 +20,15 @@ const Expenses = () => {
 
   const propertyIds = safeExpenses.map((p) => p.property) ?? [];
 
-  const { data: properties } = useGetPropertiesByIdsQuery(propertyIds);
+  const { data: properties } = useGetPropertiesByIdsQuery(
+    propertyIds ?? skipToken,
+    { skip: !propertyIds.length, refetchOnMountOrArgChange: true }
+  );
 
   const expenseData = safeExpenses?.map((p) => ({
     ...p,
     propertyAddress: properties?.find((i) => i?._id === p.property)?.address,
   }));
-
-  console.log(properties);
 
   return (
     <section className="page-section">

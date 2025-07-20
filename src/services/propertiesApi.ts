@@ -30,7 +30,7 @@ export const propertiesApi = createApi({
     GetPropertiesByIds: builder.query<Property[], string[]>({
       queryFn: async (ids, _queryApi, _extra, baseQuery) => {
         const results = await Promise.all(
-          ids.map((id) => baseQuery({ url: `/api/properties/${id}` }))
+          ids?.map((id) => baseQuery({ url: `/api/properties/${id}` }))
         );
         return { data: results.map((r) => r.data as Property) };
       },
@@ -47,7 +47,7 @@ export const propertiesApi = createApi({
 
     updateProperties: builder.mutation<
       Property,
-      { id: string; propertyData: Property }
+      { id: string; propertyData: Partial<Property> }
     >({
       query: ({ id, propertyData }) => ({
         url: `api/properties/${id}`,
@@ -57,8 +57,12 @@ export const propertiesApi = createApi({
       invalidatesTags: ["Property"],
     }),
 
-    deleteProperty: builder.mutation({
-      query: (id) => `/api/properties/${id}`,
+    deleteProperty: builder.mutation<Property, { id: string }>({
+      query: (id) => ({
+        url: `/api/properties/${id}`,
+        method: `DELETE`,
+      }),
+      invalidatesTags: ["Property"],
     }),
   }),
 });
@@ -69,4 +73,5 @@ export const {
   useCreatePropertyMutation,
   useGetPropertyQuery,
   useGetPropertiesByIdsQuery,
+  useDeletePropertyMutation,
 } = propertiesApi;

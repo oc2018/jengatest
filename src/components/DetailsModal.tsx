@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { useUpdateTenantMutation } from "@/services/tenantsApi";
 import { cleanData } from "@/lib/utils";
 import { useUpdatePropertiesMutation } from "@/services/propertiesApi";
+import { useUpdateExpenseMutation } from "@/services/expensesApi";
 
 const DetailsModal = ({
   data,
@@ -20,6 +21,7 @@ const DetailsModal = ({
 
   const [updateProperties] = useUpdatePropertiesMutation();
   const [updateTenant] = useUpdateTenantMutation();
+  const [updateExpense] = useUpdateExpenseMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,8 +29,13 @@ const DetailsModal = ({
 
     if ("name" in data) {
       await updateTenant({ id, tenantData: formData as Tenant }).unwrap();
+    } else if ("pettyCashNo" in data) {
+      await updateExpense({ id, expenseData: formData as Expense }).unwrap();
     } else {
-      await updateProperties({ id, propertyData: formData as Property });
+      await updateProperties({
+        id,
+        propertyData: formData as Property,
+      }).unwrap();
     }
 
     setOpen(false);

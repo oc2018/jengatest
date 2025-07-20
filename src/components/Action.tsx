@@ -14,7 +14,7 @@ const Action = ({
   data,
   title,
 }: {
-  data: Tenant | Property;
+  data: Tenant | Property| Expense;
   title: string;
 }) => {
   const [open, setOpen] = useState(false);

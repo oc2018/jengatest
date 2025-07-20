@@ -13,9 +13,11 @@ import {
 import {
   useCreatePropertyMutation,
   useGetPropertiesQuery,
+  useUpdatePropertiesMutation,
 } from "@/services/propertiesApi";
 import Loading from "@/pages/Loading";
 import { useCreateTenantMutation } from "@/services/tenantsApi";
+import { useCreateExpenseMutation } from "@/services/expensesApi";
 
 const CreateNewForm = ({
   formInitialState,
@@ -24,16 +26,29 @@ const CreateNewForm = ({
   formInitialState: Record<string, any>;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { data = [], isLoading } = useGetPropertiesQuery([]);
+  const { properties = [], isLoading } = useGetPropertiesQuery(undefined, {
+    selectFromResult: ({ data, ...rest }) => ({
+      properties: data?.filter((p: Property) => p.status !== "Occupied") ?? [],
+      ...rest
+    }),
+  });
   const [formData, setFormData] = useState(formInitialState);
   const [createTenant] = useCreateTenantMutation();
   const [createProperty] = useCreatePropertyMutation();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [createExpense] = useCreateExpenseMutation();
+  const [updateProperty] = useUpdatePropertiesMutation();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if ("address" in formData) {
-      createProperty({ propertyData: formData as Property });
+      await createProperty({ propertyData: formData as Property });
+    } else if ("description" in formData) {
+      await createExpense({ expenseData: formData as Expense });
     } else {
-      createTenant(formData);
+      const id = formData.property;
+      await updateProperty({ id, propertyData: { status: "Occupied" } });
+      await createTenant({ tenantData: formData as Tenant });
     }
     setOpen(false);
   };
@@ -56,9 +71,9 @@ const CreateNewForm = ({
               </SelectTrigger>
               <SelectContent className="text-white">
                 {isLoading ? (
-                  <Loading />
+                  <Loading title="" />
                 ) : (
-                  data.map((property: Property, key: number) => (
+                  properties.map((property: Property, key: number) => (
                     <SelectItem
                       key={key}
                       className="cursor-pointer focus:bg-primary/20"

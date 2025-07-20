@@ -1,5 +1,7 @@
+import Action from "@/components/Action";
+import DeleteButton from "@/components/DeleteButton";
 import { formatCurrency, formatDateISO } from "@/lib/utils";
-import type { ColumnDef } from "@tanstack/react-table";
+import type { CellContext, ColumnDef } from "@tanstack/react-table";
 
 export const expensesColumns: ColumnDef<Expense>[] = [
   {
@@ -50,6 +52,15 @@ export const expensesColumns: ColumnDef<Expense>[] = [
   },
   {
     header: "Actions",
-    cell: () => <div>edit/delete</div>,
+    cell: ({ row }: CellContext<Expense, unknown>) => {
+      const data = row.original;
+
+      return (
+        <div>
+          <Action data={data} title="Expense" />
+          <DeleteButton data={data} type="expense" />
+        </div>
+      );
+    },
   },
 ];

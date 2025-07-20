@@ -62,7 +62,7 @@ export const propertiesColumns: ColumnDef<Property>[] = [
       return (
         <div className="">
           <Action data={data} title="Property" />
-          <DeleteButton data={data} />
+          <DeleteButton data={data} type="property" />
         </div>
       );
     },

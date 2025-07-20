@@ -36,11 +36,11 @@ export const tenantApi = createApi({
       },
     }),
 
-    createTenant: builder.mutation<Tenant, { formData: Tenant }>({
-      query: (formData) => ({
+    createTenant: builder.mutation<Tenant, { tenantData: Tenant }>({
+      query: ({ tenantData }) => ({
         url: `api/tenants`,
         method: `POST`,
-        body: formData,
+        body: tenantData,
       }),
       invalidatesTags: ["Tenant"],
     }),
@@ -55,7 +55,7 @@ export const tenantApi = createApi({
     }),
 
     deleteTenant: builder.mutation<Tenant, { id: string }>({
-      query: (id) => ({
+      query: ({ id }) => ({
         url: `/api/tenants/${id}`,
         method: "DELETE",
       }),
