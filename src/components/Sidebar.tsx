@@ -2,16 +2,34 @@ import { cn, sidebarLinks } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
 import Icon from "@/Icon";
 import { Avatar, AvatarFallback } from "./ui/avatar";
+import logo from "@/assets/logo.png";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/store";
 
 const Sidebar = () => {
+  const { user } = useSelector((state: RootState) => state.user);
+  const me = user.user;
+
   return (
     <div className="sidebar">
       <div>
         <div className="logo flex flex-col items-center">
-          <h1 className="text-4xl font-bold">
-            E<span className="max-md:hidden leanding-0">mirl</span>
-          </h1>
-          <p className="md:flex hidden leading-0">Builders</p>
+          <img
+            className="max-md:hidden"
+            alt="logo"
+            src={logo}
+            width={150}
+            height={150}
+          />
+          <img
+            className="max-md:flex hidden"
+            alt="logo"
+            src={logo}
+            width={60}
+            height={60}
+          />
+          {/* <h1 className="md:flex hidden leading-4 text-4xl font-bold">Emirl</h1>
+          <p className="md:flex hidden leading-3">Builders</p> */}
         </div>
       </div>
       <div className="flex flex-col gap-3">
@@ -42,18 +60,21 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </div>
-      <div className="flex flex-row items-center rounded-full justify-center gap-2 border p-1 max-md:pr-0 pr-4 cursor-pointer border-blue-200">
-        <NavLink to={"/profile"}>
-          <Avatar className="bg-primary/20 ">
+      <div className="inline-flex items-center rounded-full justify-center  md:border max-md:gap-0 gap-2 m-0 p-1 cursor-pointer md:border-primary/50">
+        <NavLink
+          to={"/profile"}
+          className="max-md:border p-0.5 rounded-full border-primary"
+        >
+          <Avatar className=" rounded-full shrink-0 bg-primary/20 ">
             {/* <AvatarImage src=""/> */}
-            <AvatarFallback className="font-bold text-white bg-primary">
-              E
+            <AvatarFallback className="flex items-center text-center justify-center font-bold text-white text-xl bg-primary">
+              {me.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </NavLink>
-        <div className="flex leading-2 flex-col max-md:hidden">
-          <p className="font-semibold text-dark-200">eric mutugi ndege</p>
-          <p className="text-light-500 text-xs">eric@ericndege.com</p>
+        <div className="flex pr-2 leading-2 flex-col max-md:hidden">
+          <p className="font-semibold text-dark-200">{me?.name}</p>
+          <p className="text-light-500 text-xs">{me?.email}</p>
         </div>
       </div>
     </div>
