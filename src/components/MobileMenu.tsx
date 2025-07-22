@@ -5,10 +5,11 @@ import { cn, sidebarLinks } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
 import { CloseIcon } from "./CloseIcon";
 import { OpenIcon } from "./OpenIcon";
+import Logout from "./logout";
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
-
+  const className = "text-3xl font-normal text-dark-100/95 focus:text-dark-100/95";
   return (
     <section className="relative">
       <Button
@@ -24,7 +25,7 @@ const MobileMenu = () => {
       </Button>
       <div
         className={cn(
-          "flex fixed top-0  left-0 w-full h-screen bg-primary flex-col justify-center sm:hidden",
+          "flex fixed top-0  left-0 w-full h-screen bg-primary flex-col justify-center items-center sm:hidden",
           open ? "z-40" : "-z-10 hidden"
         )}
       >
@@ -51,6 +52,9 @@ const MobileMenu = () => {
               )}
             </NavLink>
           ))}
+        </div>
+        <div>
+          <Logout className={className} />
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import { cn, sidebarLinks } from "@/lib/utils";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Icon from "@/Icon";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import logo from "@/assets/logo.png";
@@ -60,23 +60,23 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </div>
-      <div className="inline-flex items-center rounded-full justify-center  md:border max-md:gap-0 gap-2 m-0 p-1 cursor-pointer md:border-primary/50">
-        <NavLink
-          to={"/profile"}
-          className="max-md:border p-0.5 rounded-full border-primary"
-        >
+      <Link
+        to={"/profile"}
+        className="inline-flex items-center rounded-full justify-center  md:border max-md:gap-0 gap-2 m-0 p-1 cursor-pointer md:border-primary/50"
+      >
+        <div className="max-md:border p-0.5 rounded-full border-primary">
           <Avatar className=" rounded-full shrink-0 bg-primary/20 ">
             {/* <AvatarImage src=""/> */}
             <AvatarFallback className="flex items-center text-center justify-center font-bold text-white text-xl bg-primary">
               {me.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
-        </NavLink>
+        </div>
         <div className="flex pr-2 leading-2 flex-col max-md:hidden">
           <p className="font-semibold text-dark-200">{me?.name}</p>
           <p className="text-light-500 text-xs">{me?.email}</p>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

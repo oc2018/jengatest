@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 
-const Logout = () => {
+const Logout = ({ className }: { className: string }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -15,7 +15,11 @@ const Logout = () => {
   };
 
   return (
-    <Button className="cursor-pointer text-red" variant="ghost" onClick={handleLogout}>
+    <Button
+      className={`cursor-pointer text-red ${className} `}
+      variant="ghost"
+      onClick={handleLogout}
+    >
       Logout
     </Button>
   );

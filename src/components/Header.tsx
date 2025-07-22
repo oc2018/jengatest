@@ -2,11 +2,11 @@ import type { RootState } from "@/app/store";
 import { useSelector } from "react-redux";
 import Logout from "./logout";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import Search from "./Search";
 import MobileMenu from "./MobileMenu";
-import userIcon from "@/icons/user.svg";
+import { UserIcon } from "./UserIcon";
 
 const secret = import.meta.env.JWT_SECRET;
 
@@ -24,6 +24,8 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const nowSec = Math.floor(Date.now() / 1000);
 
+  const me = user?.user;
+
   useEffect(() => {
     if (!token) {
       navigate("/auth");
@@ -39,20 +41,18 @@ const Header = () => {
   return (
     <header className="header">
       <div className="flex flex-row items-center h-full justify-between">
-        <div className=" flex sm:hidden cursor-pointer">
-          <img src={userIcon} alt="user" width={20} />
-        </div>
+        <Link to={"/profile"} className=" flex sm:hidden cursor-pointer ml-2 ">
+          <UserIcon className="text-primary " />
+        </Link>
         <div className="max-sm:hidden">
-          <h2 className="text-2xl text-dark-500 font-semibold">
-            {user?.user.name}
-          </h2>
+          <h2 className="text-2xl text-dark-500 font-semibold">{me.name}</h2>
           <p className="text-base text-slate-500">Monitor your tenants here</p>
         </div>
       </div>
       <div>
         <div className="flex gap-5 justify-center items-center">
           <Search />
-          <Logout />
+          <Logout className="" />
           <MobileMenu />
         </div>
       </div>

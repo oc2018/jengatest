@@ -8,6 +8,7 @@ import Transactions from "./pages/Transactions";
 import Bank from "./pages/Bank";
 import Properties from "./pages/Properties";
 import Tenants from "./pages/Tenants";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/bank" element={<Bank />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/tenants" element={<Tenants />} />
+          <Route path="/profile" element={<Profile/>}/>
         </Route>
         <Route path="/auth" element={<Auth />} />
       </Routes>

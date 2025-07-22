@@ -62,6 +62,7 @@ const AuthForm = () => {
           className="w-full border-gray-600 border my-3 p-2 rounded-lg"
           type="password"
           placeholder="Password"
+          autoComplete="new-password"
           value={formData.password}
           onChange={(e) =>
             setFormData({ ...formData, password: e.target.value })
@@ -73,6 +74,7 @@ const AuthForm = () => {
             className="w-full border-gray-600 border my-3 p-2 rounded-lg"
             type="password"
             placeholder="Confirm Password"
+            autoComplete="new-password"
             value={formData.confirmPassword}
             onChange={(e) =>
               setFormData({ ...formData, confirmPassword: e.target.value })
@@ -80,13 +82,13 @@ const AuthForm = () => {
           />
         )}
 
-        <Button className="w-full bg-primary p-2 rounded-lg">
+        <Button className="w-full bg-primary p-2 rounded-lg text-light-300 font-bold text-xl cursor-pointer">
           {isSignup ? "Save Details" : "Login"}
         </Button>
       </form>
       <Button
         variant="ghost"
-        className="w-full"
+        className="w-full cursor-pointer text-primary"
         onClick={() => setIsSignup((prev) => !prev)}
       >
         {isSignup

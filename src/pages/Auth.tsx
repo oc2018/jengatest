@@ -1,15 +1,16 @@
 import AuthForm from "../components/AuthForm";
+import logo from "@/assets/logo.png";
 
 const Auth = () => {
   return (
-    <div className="flex w-full items-center h-full content-center flex-col">
-      <div className="text-3xl font-bold">
-        <h1 className="">Emirl Builders Limited</h1>
-      </div>
+    <section className="flex flex-col h-screen w-screen justify-center items-center p-10 ">
       <div className="">
+        <img src={logo} alt="logo" width={200} />
+      </div>
+      <div className="max-w-3xl">
         <AuthForm />
       </div>
-    </div>
+    </section>
   );
 };
 
