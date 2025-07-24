@@ -31,7 +31,7 @@
     @apply text-base font-medium max-md:hidden!;
   }
   .page-section {
-    @apply w-full rounded-2xl bg-white p-5;
+    @apply w-full rounded-2xl bg-white p-4;
   }
   .body-text {
     @apply mt-3 w-full overflow-hidden bg-light-300 p-3 rounded-xl;
@@ -47,6 +47,9 @@
   }
   .text-14-medium {
     @apply text-[14px] font-medium leading-[14px];
+  }
+  .text-12-medium {
+    @apply text-[12px] font-medium leading-[12px];
   }
 }
 

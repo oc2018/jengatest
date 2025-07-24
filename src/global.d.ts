@@ -57,3 +57,75 @@ type Expense = {
 type DisplayMode = "symbol" | "code" | "name" | "none" | "narrowSymbol";
 
 type Style = "decimal" | "currency" | "percent";
+
+interface TokenResponse {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+  tokenType: string;
+}
+
+interface GetBalanceRequest {
+  accountId: string;
+  countryCode: string;
+  fromDate?: string;
+  toDate?: string;
+}
+
+interface BalanceItem {
+  amount: string;
+  type: string;
+  currency?: string;
+}
+
+interface GetBalanceResponse {
+  data: {
+    balances: BalanceItem[];
+    currency: string;
+  };
+}
+
+interface ApiResponse<T> {
+  status: number;
+  data: T;
+}
+
+interface BalanceProps {
+  amounts: BalanceItem[];
+  currency: string;
+  isLoading: boolean;
+  error: FetchBaseQueryError | SerializedError | undefined;
+}
+
+interface GetMiniStatementRequest {
+  accountId: string;
+  countryCode: string;
+  fromDate: string;
+  toDate: string;
+}
+
+interface StatementTransaction {
+  amount: string;
+  chequeNo: string | null;
+  date: string;
+  description: string;
+  type: string;
+}
+
+interface GetMiniStatementResponse {
+  code: number;
+  data: {
+    accountNumber: string;
+    balance: string;
+    currency: string;
+    transactions: StatementTransaction[];
+  };
+  message: string;
+  status: boolean;
+}
+
+interface MiniStatementProps {
+  transactions: StatementTransaction[];
+  isLoading: boolean;
+  error: FetchBaseQueryError | SerializedError | undefined;
+}

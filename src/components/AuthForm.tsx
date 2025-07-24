@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useSignUpMutation, useSignInMutation } from "../services/userApi";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
+import { toast } from "sonner";
+import { extractErrorMessage } from "@/lib/utils";
 
 interface User {
   name: string;
@@ -31,11 +33,12 @@ const AuthForm = () => {
         signup(formData);
       } else {
         await signin(formData).unwrap();
-        // console.log("Signin success payload", payload);
       }
       navigate("/");
-    } catch (error) {
-      console.error(error);
+    } catch (err: unknown) {
+      const msg = extractErrorMessage(err);
+      toast.error(msg);
+      console.error(err);
     }
   };
 

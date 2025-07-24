@@ -106,3 +106,17 @@ export const ConfirmContext = React.createContext<
 >(async () => false);
 
 export const useConfirm = () => useContext(ConfirmContext);
+
+export const extractErrorMessage = (err: unknown): string => {
+  if (typeof err === "object" && err !== null) {
+    if (
+      "data" in err &&
+      err.data &&
+      typeof (err as any).data.error === "string"
+    ) {
+      return (err as any).data.error;
+    }
+    if (err instanceof Error) return err.message;
+  }
+  return typeof err === "string" ? err : "Unexpected error occured";
+};

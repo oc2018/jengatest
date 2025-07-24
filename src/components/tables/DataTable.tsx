@@ -54,7 +54,7 @@ export function DataTable<TData, TValue>({
                     className={cn(
                       "sticky top-0 bg-primary text-white z-20 shadow-sm",
                       typeof header.column.columnDef.header === "string" &&
-                        ["Amount", "Rent", "Deposit"].includes(
+                        ["Amount", "Rent", "Deposit", "amount"].includes(
                           header.column.columnDef.header
                         ) &&
                         "text-right pr-5"

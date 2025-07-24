@@ -10,22 +10,22 @@ import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
+interface BaseQueryWithReauthApiResponse {
+  data: {
+    accessToken: string;
+    refreshToken: string;
+    expiresIn: number;
+  };
+}
+
 const baseQuery = fetchBaseQuery({
   baseUrl: baseURL,
-  // prepareHeaders: (headers, { getState }) => {
-  //   const state = getState() as RootState;
-  //   console.log(`state ${state}`);
-  //   const token = (getState() as RootState).user.user.jengaToken.token;
+  prepareHeaders: (headers, { getState }) => {
+    const accessToken = (getState() as RootState).user.user?.jengaToken.token;
+    if (accessToken) headers.set("Authorization", `Bearear ${accessToken}`);
 
-  //   if (token) {
-  //     headers.set("Authorization", `Bearer ${token}`);
-  //   }
-
-  //   headers.set("Api-key", apiKey);
-  //   headers.set("Content-Type", "applicatio/json");
-
-  //   return headers;
-  // },
+    return headers;
+  },
 });
 
 //wraper with re-auth
@@ -50,17 +50,9 @@ export const baseQueryWithReauth: BaseQueryFn<
 
     //refresh
 
-    const refreshBaseQuery = fetchBaseQuery({
-      baseUrl: baseURL,
-      // headers: {
-      //   "Api-Key": apiKey,
-      //   "Content-Type": "application/json",
-      // },
-    });
-
-    const refreshResult = await refreshBaseQuery(
+    const refreshResult = await baseQuery(
       {
-        url: "api/jenga/refreshtoken",
+        url: "/api/jenga/refreshtoken",
         method: "POST",
         body: { refreshToken },
       },
@@ -69,17 +61,13 @@ export const baseQueryWithReauth: BaseQueryFn<
     );
 
     if (refreshResult.data) {
-      const data = refreshResult.data as {
-        token: string;
-        refreshToken: string;
-        expiresIn: number;
-      };
-      //save updated
+      const { data } = refreshResult as BaseQueryWithReauthApiResponse;
+      console.log("refresh token:", data);
       api.dispatch(
         setToken({
-          token: data.token,
-          refreshToken: data.refreshToken,
-          expiresIn: data.expiresIn,
+          token: data?.accessToken,
+          refreshToken: data?.refreshToken,
+          expiresIn: data?.expiresIn,
         })
       );
 

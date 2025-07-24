@@ -9,7 +9,7 @@ export const getJengaTokenApi = createApi({
     baseUrl: baseURL,
   }),
   endpoints: (builder) => ({
-    getToken: builder.query({
+    getToken: builder.query<TokenResponse, void>({
       query: () => {
         return {
           url: `api/jenga/token`,
@@ -19,12 +19,14 @@ export const getJengaTokenApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const data = await queryFulfilled;
+          localStorage.setItem("accessToken", data?.data.accessToken);
 
+          console.log(data);
           dispatch(
             setToken({
-              token: data.data.accessToken,
-              refreshToken: data.data.refreshToken,
-              expiresIn: data.data.expiresIn,
+              token: data?.data.accessToken,
+              refreshToken: data?.data.refreshToken,
+              expiresIn: data?.data.expiresIn,
             })
           );
         } catch (error) {

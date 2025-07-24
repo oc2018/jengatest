@@ -8,7 +8,7 @@ import Search from "./Search";
 import MobileMenu from "./MobileMenu";
 import { UserIcon } from "./UserIcon";
 
-const secret = import.meta.env.JWT_SECRET;
+// const secret = import.meta.env.JWT_SECRET;
 
 interface JwtPayload {
   name: string;
@@ -24,19 +24,23 @@ const Header = () => {
   const token = localStorage.getItem("token");
   const nowSec = Math.floor(Date.now() / 1000);
 
-  const me = user?.user;
+  const me = user?.user.name;
 
   useEffect(() => {
-    if (!token) {
+    if (!token || !me) {
       navigate("/auth");
-    } else {
-      const decodedToken = jwtDecode<JwtPayload>(token, secret);
-      // console.log(decodedToken.exp, nowSec);
+      return;
+    }
+    try {
+      const decodedToken = jwtDecode<JwtPayload>(token);
       if (nowSec > decodedToken.exp!) {
         navigate("/auth");
+        localStorage.removeItem("token");
       }
+    } catch (error) {
+      console.error("Invalid JWT: ", error);
     }
-  }, [token, nowSec, navigate]);
+  }, [token, nowSec, navigate, me]);
 
   return (
     <header className="header">
@@ -45,7 +49,7 @@ const Header = () => {
           <UserIcon className="text-primary " />
         </Link>
         <div className="max-sm:hidden">
-          <h2 className="text-2xl text-dark-500 font-semibold">{me.name}</h2>
+          <h2 className="text-2xl text-primary font-semibold">{me}</h2>
           <p className="text-base text-slate-500">Monitor your tenants here</p>
         </div>
       </div>
