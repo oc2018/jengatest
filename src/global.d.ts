@@ -9,9 +9,10 @@ interface ImportMeta {
 
 interface User {
   name: string;
-  emai: string;
+  email: string;
   password: string;
   confirmPassword?: string;
+  id?: string;
 }
 
 type Tenant = {
@@ -128,4 +129,26 @@ interface MiniStatementProps {
   transactions: StatementTransaction[];
   isLoading: boolean;
   error: FetchBaseQueryError | SerializedError | undefined;
+}
+
+interface UserState {
+  user: {
+    name: string;
+    email: string;
+    _id: string;
+  };
+  jengaToken: {
+    token: string | null;
+    refreshToken: string | null;
+    expiresAt: number | null;
+  };
+}
+
+type UserRes = {
+  user: User;
+  token: string;
+};
+interface SignInArgs {
+  email: string;
+  password: string;
 }

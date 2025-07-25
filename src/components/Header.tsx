@@ -1,5 +1,3 @@
-import type { RootState } from "@/app/store";
-import { useSelector } from "react-redux";
 import Logout from "./logout";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import Search from "./Search";
 import MobileMenu from "./MobileMenu";
 import { UserIcon } from "./UserIcon";
+import { useGetMeQuery } from "@/services/userApi";
 
 // const secret = import.meta.env.JWT_SECRET;
 
@@ -19,15 +18,21 @@ interface JwtPayload {
 }
 
 const Header = () => {
-  const { user } = useSelector((state: RootState) => state.user);
+  // const { user } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const nowSec = Math.floor(Date.now() / 1000);
+  const profile = localStorage.getItem("profile");
+  const parsedProfile = profile ? JSON.parse(profile) : null;
 
-  const me = user?.user.name;
+  const userId = parsedProfile?.user.id || undefined;
+  const skipGetme = !userId;
+  const { data: me } = useGetMeQuery(userId, { skip: skipGetme });
+
 
   useEffect(() => {
-    if (!token || !me) {
+    // console.log("header", me?.user.name);
+    if (!token) {
       navigate("/auth");
       return;
     }
@@ -49,7 +54,7 @@ const Header = () => {
           <UserIcon className="text-primary " />
         </Link>
         <div className="max-sm:hidden">
-          <h2 className="text-2xl text-primary font-semibold">{me}</h2>
+          <h2 className="text-2xl text-primary font-semibold">{me?.name}</h2>
           <p className="text-base text-slate-500">Monitor your tenants here</p>
         </div>
       </div>

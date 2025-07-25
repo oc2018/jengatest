@@ -1,5 +1,9 @@
-import { useState } from "react";
-import { useSignUpMutation, useSignInMutation } from "../services/userApi";
+import { useEffect, useState } from "react";
+import {
+  useSignUpMutation,
+  useSignInMutation,
+  // useGetMeQuery,
+} from "../services/userApi";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
@@ -20,21 +24,34 @@ const AuthForm = () => {
     confirmPassword: "",
   };
 
+  // const profile = localStorage.getItem("profile");
+  // const parsedProfile = profile ? JSON.parse(profile) : null;
+
+  // const userId = parsedProfile?.user.id || undefined;
   const [formData, setFormData] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
   const [signup] = useSignUpMutation();
   const [signin] = useSignInMutation();
+  // const skipGetme = !userId;
+  // const { data: me, isSuccess } = useGetMeQuery(userId, { skip: skipGetme });
   const navigate = useNavigate();
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
-  const handeleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // console.log(me, isSuccess);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       if (isSignup) {
-        signup(formData);
+        await signup(formData).unwrap();
+        navigate("/auth");
       } else {
-        await signin(formData).unwrap();
+        const result = await signin(formData).unwrap();
+        if (result?.token) {
+          setLoginSuccess(true);
+          toast.success("Login Successful");
+        }
       }
-      navigate("/");
     } catch (err: unknown) {
       const msg = extractErrorMessage(err);
       toast.error(msg);
@@ -42,9 +59,13 @@ const AuthForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (loginSuccess) navigate("/");
+  }, [navigate, loginSuccess]);
+
   return (
     <div className="flex flex-col max-w-3xl">
-      <form onSubmit={handeleSubmit}>
+      <form onSubmit={handleSubmit}>
         {isSignup && (
           <input
             className="w-full border-gray-600 border my-3 p-2 rounded-lg"

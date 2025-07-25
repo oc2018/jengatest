@@ -1,18 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-export interface UserState {
-  user: {
-    name: string;
-    email: string;
-    _id: string;
-  };
-  jengaToken: {
-    token: string | null;
-    refreshToken: string | null;
-    expiresAt: number | null;
-  };
-}
-
 const initialState: UserState = {
   user: { name: "", email: "", _id: "" },
   jengaToken: { token: null, refreshToken: null, expiresAt: null },
@@ -26,7 +13,8 @@ export const userSlice = createSlice({
       localStorage.clear();
       return initialState;
     },
-    setUser: (state, action) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setUser: (state, action: PayloadAction<any>) => {
       state.user = action.payload;
     },
     setToken: (

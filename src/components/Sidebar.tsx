@@ -3,12 +3,20 @@ import { Link, NavLink } from "react-router-dom";
 import Icon from "@/Icon";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import logo from "@/assets/logo.png";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/app/store";
+import { useGetMeQuery } from "@/services/userApi";
+// import { useSelector } from "react-redux";
+// import type { RootState } from "@/app/store";
 
 const Sidebar = () => {
-  const { user } = useSelector((state: RootState) => state.user);
-  const me = user.user;
+  // const { user } = useSelector((state: RootState) => state.user);
+  const profile = localStorage.getItem("profile");
+  const parsedProfile = profile ? JSON.parse(profile) : null;
+
+  const userId = parsedProfile?.user.id || undefined;
+
+  const skipGetme = !userId;
+  const { data: me } = useGetMeQuery(userId, { skip: skipGetme });
+  // console.log(me?.name);
 
   return (
     <div className="sidebar">
@@ -68,7 +76,7 @@ const Sidebar = () => {
           <Avatar className=" rounded-full shrink-0 bg-primary/20 ">
             {/* <AvatarImage src=""/> */}
             <AvatarFallback className="flex items-center text-center justify-center font-bold text-white text-xl bg-primary">
-              {me.name.charAt(0)}
+              {me?.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </div>

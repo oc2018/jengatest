@@ -3,7 +3,7 @@ import userReducer from "../features/authSlice";
 
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { userApi } from "../services/userApi";
-import { currentUserApi } from "../services/currentUserApi";
+// import { currentUserApi } from "../services/currentUserApi";
 import { jengaApi } from "../services/jengaApi";
 
 //persistence
@@ -32,7 +32,7 @@ export const store = configureStore({
   reducer: {
     user: persistedReducer,
     [userApi.reducerPath]: userApi.reducer,
-    [currentUserApi.reducerPath]: currentUserApi.reducer,
+    // [currentUserApi.reducerPath]: currentUserApi.reducer,
     [jengaApi.reducerPath]: jengaApi.reducer,
     [getJengaTokenApi.reducerPath]: getJengaTokenApi.reducer,
     [tenantApi.reducerPath]: tenantApi.reducer,
@@ -46,7 +46,7 @@ export const store = configureStore({
       serializableCheck: false,
     }).concat(
       userApi.middleware,
-      currentUserApi.middleware,
+      // currentUserApi.middleware,
       jengaApi.middleware,
       getJengaTokenApi.middleware,
       tenantApi.middleware,

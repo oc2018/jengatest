@@ -1,5 +1,5 @@
 import type { RootState } from "@/app/store";
-import { useGetMeQuery } from "@/services/currentUserApi";
+import { useGetMeQuery } from "@/services/userApi";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
