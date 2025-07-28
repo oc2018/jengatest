@@ -137,6 +137,7 @@ interface UserState {
     name: string;
     email: string;
     _id: string;
+    avatarUrl: string;
   };
   jengaToken: {
     token: string | null;

@@ -1,4 +1,4 @@
-// import { setUser } from "@/features/authSlice";
+import { setUser } from "@/features/authSlice";
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
@@ -72,15 +72,15 @@ export const userApi = createApi({
         method: `GET`,
       }),
 
-      // async onQueryStarted(args, { dispatch, queryFulfilled }) {
-      //   try {
-      //     const { data } = await queryFulfilled;
-      //     console.log(data);
-      //     dispatch(setUser(data));
-      //   } catch (error) {
-      //     console.error("Failed to fetch current user", error);
-      //   }
-      // },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log(data);
+          dispatch(setUser(data));
+        } catch (error) {
+          console.error("Failed to fetch current user", error);
+        }
+      },
       providesTags: (result, error, id) => [{ type: "Me", id }],
     }),
   }),

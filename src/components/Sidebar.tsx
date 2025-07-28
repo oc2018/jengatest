@@ -3,27 +3,29 @@ import { Link, NavLink } from "react-router-dom";
 import Icon from "@/Icon";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import logo from "@/assets/logo.png";
-import { useGetMeQuery } from "@/services/userApi";
-import { useEffect, useState } from "react";
-// import { useSelector } from "react-redux";
-// import type { RootState } from "@/app/store";
+// import { useGetMeQuery } from "@/services/userApi";
+// import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/store";
 
 const Sidebar: React.FC = () => {
-  // const { user } = useSelector((state: RootState) => state.user);
-  const profile = localStorage.getItem("profile");
-  const parsedProfile = profile ? JSON.parse(profile) : null;
+  const { user } = useSelector((state: RootState) => state.user);
+  // const profile = localStorage.getItem("profile");
+  // const parsedProfile = profile ? JSON.parse(profile) : null;
 
-  const [me, setMe] = useState<User | null>(null);
-  const userId = parsedProfile?.user.id || undefined;
+  // const [me, setMe] = useState<User | null>(null);
+  // const userId = parsedProfile?.user.id || undefined;
 
-  const skipGetme = !userId;
-  const { data, isLoading } = useGetMeQuery(userId, { skip: skipGetme });
+  // const skipGetme = !userId;
+  // const { data, isLoading } = useGetMeQuery(userId, { skip: skipGetme });
 
-  useEffect(() => {
-    if (!isLoading) {
-      setMe(data![0]);
-    }
-  }, [data, isLoading]);
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     setMe(data![0]);
+  //   }
+  // }, [data, isLoading]);
+  const me = user?.user;
+  console.log(user);
 
   return (
     <div className="sidebar">
