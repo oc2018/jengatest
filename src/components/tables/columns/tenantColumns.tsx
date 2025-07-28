@@ -49,9 +49,9 @@ export const tenantColumns: ColumnDef<Tenant>[] = [
       const data = row.original;
 
       return (
-        <div className="">
+        <div>
           <Action data={data} title="Tenant" />
-          <DeleteButton data={data} />
+          <DeleteButton data={data} type="tenant" />
         </div>
       );
     },

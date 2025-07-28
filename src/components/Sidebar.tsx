@@ -1,36 +1,43 @@
 import { cn, sidebarLinks } from "@/lib/utils";
 import { Link, NavLink } from "react-router-dom";
 import Icon from "@/Icon";
-import { Avatar, AvatarFallback } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import logo from "@/assets/logo.png";
 import { useGetMeQuery } from "@/services/userApi";
+import { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
 // import type { RootState } from "@/app/store";
 
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
   // const { user } = useSelector((state: RootState) => state.user);
   const profile = localStorage.getItem("profile");
   const parsedProfile = profile ? JSON.parse(profile) : null;
 
+  const [me, setMe] = useState<User | null>(null);
   const userId = parsedProfile?.user.id || undefined;
 
   const skipGetme = !userId;
-  const { data: me } = useGetMeQuery(userId, { skip: skipGetme });
-  // console.log(me?.name);
+  const { data, isLoading } = useGetMeQuery(userId, { skip: skipGetme });
+
+  useEffect(() => {
+    if (!isLoading) {
+      setMe(data![0]);
+    }
+  }, [data, isLoading]);
 
   return (
     <div className="sidebar">
       <div>
         <div className="logo flex flex-col items-center">
           <img
-            className="max-md:hidden"
+            className="max-sm:hidden"
             alt="logo"
             src={logo}
             width={150}
             height={150}
           />
           <img
-            className="max-md:flex hidden"
+            className="max-sm:flex hidden"
             alt="logo"
             src={logo}
             width={60}
@@ -74,7 +81,7 @@ const Sidebar = () => {
       >
         <div className="max-md:border p-0.5 rounded-full border-primary">
           <Avatar className=" rounded-full shrink-0 bg-primary/20 ">
-            {/* <AvatarImage src=""/> */}
+            <AvatarImage src={me?.avatarUrl} />
             <AvatarFallback className="flex items-center text-center justify-center font-bold text-white text-xl bg-primary">
               {me?.name.charAt(0)}
             </AvatarFallback>

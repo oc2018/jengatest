@@ -7,9 +7,10 @@ import { CloseIcon } from "./CloseIcon";
 import { OpenIcon } from "./OpenIcon";
 import Logout from "./logout";
 
-const MobileMenu = () => {
+const MobileMenu: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const className = "text-3xl font-normal text-dark-100/95 focus:text-dark-100/95";
+  const className =
+    "text-3xl font-normal text-dark-100/95 focus:text-dark-100/95 hover:text-red";
   return (
     <section className="relative">
       <Button
@@ -44,7 +45,9 @@ const MobileMenu = () => {
                 <p
                   className={cn(
                     "text-3xl text-center mb-3 ",
-                    isActive ? "text-white" : "text-dark-100"
+                    isActive
+                      ? "text-light-300"
+                      : "text-dark-100 hover:text-light-300"
                   )}
                 >
                   {link.text}

@@ -12,7 +12,8 @@ interface User {
   email: string;
   password: string;
   confirmPassword?: string;
-  id?: string;
+  _id?: string;
+  avatarUrl?: url;
 }
 
 type Tenant = {
@@ -22,7 +23,7 @@ type Tenant = {
   phoneNumber: string;
   property: string;
   propertyAddress?: string;
-  _id?: string;
+  _id: string;
 };
 
 type Property = {
@@ -151,4 +152,18 @@ type UserRes = {
 interface SignInArgs {
   email: string;
   password: string;
+}
+
+interface SendMoneyFormData {
+  data: {
+    type: string;
+    accountId: string;
+    amount: number;
+  };
+  isMobile: boolean;
+}
+
+interface ActionProps {
+  data: Tenant | Property | Expense;
+  title: string;
 }

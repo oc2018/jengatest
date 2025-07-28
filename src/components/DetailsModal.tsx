@@ -45,7 +45,12 @@ const DetailsModal = ({
     <form action="" className="form" onSubmit={handleSubmit}>
       {Object.entries(formData).map(([key, value]) => (
         <div key={key} className="flex items-center gap-2">
-          <label className="w-1/4">{key.replace(/([A-Z])/g, "$1")}:</label>
+          <label className="w-1/4">
+            {key
+              .replace(/([A-Z])/g, " $1")
+              .replace(/\b\w/g, (char) => char.toUpperCase())}
+            :
+          </label>
           <Input
             type={typeof value === "number" ? "number" : "text"}
             value={(value ?? "").toString()}
@@ -64,7 +69,7 @@ const DetailsModal = ({
         type="submit"
         className="text-white font-bold mt-3 cursor.pointer w-full"
       >
-        Update
+        {"accountId" in data ? "Send Money" : " Update"}
       </Button>
     </form>
   );

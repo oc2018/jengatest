@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import Balance from "@/components/Balance";
 import Ministatement from "@/components/Ministatement";
+import BankActions from "@/components/BankActions";
 
 const Bank: React.FC = () => {
   const { data: tokenQuery } = useGetTokenQuery();
@@ -46,12 +47,18 @@ const Bank: React.FC = () => {
         <h2 className="text-xl font-semibold text-primary">Bank</h2>
       </div>
       <div className="flex py-1 w-full flex-col ">
-        <Balance
-          amounts={amounts}
-          currency={currency}
-          isLoading={isLoading}
-          error={error}
-        />
+        <div className="flex flex-col sm:flex-row">
+          <Balance
+            amounts={amounts}
+            currency={currency}
+            isLoading={isLoading}
+            error={error}
+          />
+
+          {/* <div className="actions"> */}
+          <BankActions />
+          {/* </div> */}
+        </div>
         <div className="">
           <Ministatement
             transactions={transactions}

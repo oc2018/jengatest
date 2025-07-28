@@ -21,7 +21,7 @@ export const getJengaTokenApi = createApi({
           const data = await queryFulfilled;
           localStorage.setItem("accessToken", data?.data.accessToken);
 
-          console.log(data);
+          // console.log(data);
           dispatch(
             setToken({
               token: data?.data.accessToken,

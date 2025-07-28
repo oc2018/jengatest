@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,19 +10,24 @@ import {
 import { Button } from "./ui/button";
 import DetailsModal from "./DetailsModal";
 
-const Action: React.FC<ActionProps> = ({ data, title }) => {
+const BankAction: React.FC<SendMoneyFormData> = ({ data, isMobile }) => {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer text-primary" variant="ghost">
-          edit
+        <Button
+          variant={"ghost"}
+          className="cursor-pointer text-sm text-gray-600"
+        >
+          {isMobile ? "to Mobile" : "to Bank"}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-2xl bg-dark-100/90 text-light-400">
-        <DialogHeader className="space-y-3 text-12-semibold">
-          <DialogTitle>{title} Details</DialogTitle>
-          <DialogDescription>Edit details here..</DialogDescription>
+        <DialogHeader className="space-y-3">
+          <DialogTitle>Send Money</DialogTitle>
+          <DialogDescription>
+            Send money to another bank account
+          </DialogDescription>
         </DialogHeader>
         <DetailsModal data={data} setOpen={setOpen} />
       </DialogContent>
@@ -30,4 +35,4 @@ const Action: React.FC<ActionProps> = ({ data, title }) => {
   );
 };
 
-export default Action;
+export default BankAction;

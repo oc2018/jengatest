@@ -23,6 +23,13 @@ export const userApi = createApi({
   tagTypes: ["Me"],
 
   endpoints: (builder) => ({
+    uploadImage: builder.mutation<{ url: string }, FormData>({
+      query: (fileData) => ({
+        url: `/api/uploads`,
+        method: `POST`,
+        body: fileData,
+      }),
+    }),
     getUsers: builder.query({
       query: () => `/api/users`,
     }),
@@ -57,11 +64,11 @@ export const userApi = createApi({
           console.error("Sign-in failed", error);
         }
       },
-      invalidatesTags: (result) => [{ type: "Me", id: result?.user.id }],
+      invalidatesTags: (result) => [{ type: "Me", id: result?.user._id }],
     }),
-    getMe: builder.query<User, string>({
-      query: (id) => ({
-        url: `api/users/${id}`,
+    getMe: builder.query<User[], string>({
+      query: (_id) => ({
+        url: `api/users/${_id}`,
         method: `GET`,
       }),
 
@@ -84,4 +91,5 @@ export const {
   useSignUpMutation,
   useSignInMutation,
   useGetMeQuery,
+  useUploadImageMutation,
 } = userApi;
