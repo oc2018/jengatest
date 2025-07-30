@@ -22,7 +22,7 @@ const Properties = () => {
       <div className="body-text">
         {isError ? (
           <Error />
-        ) : isLoading || !data.length ? (
+        ) : isLoading || !data?.length ? (
           <Loading title="" />
         ) : (
           <DataTable columns={propertiesColumns} data={data} />

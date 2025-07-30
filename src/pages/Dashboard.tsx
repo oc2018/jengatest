@@ -5,6 +5,8 @@
 // import { useGetTokenQuery } from "../services/getJengaTokenApi";
 // import { useGetBalanceQuery } from "../services/jengaApi";
 
+import Feature from "@/components/Feature";
+
 const Dashboard = () => {
   // const { user } = useSelector((state: RootState) => state.user);
 
@@ -17,7 +19,7 @@ const Dashboard = () => {
 
   // const [result] = useGetTokenMutation();
   // const { data } = useGetTokenQuery([]);
- 
+
   // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   //   e.preventDefault();
   //   balance(formData);
@@ -33,7 +35,16 @@ const Dashboard = () => {
         <h2 className="text-xl font-semibold">Dashboard</h2>
       </div>
       <div className="body-text">
-        <p>Dashboard text body</p>
+        <div className="flex flex-col">
+          <div className="flex flex-col md:flex-row gap-3">
+            <Feature title="Revenue" icon="" value={28009} />
+            <Feature title="Properties" icon="" value={4} />
+            <Feature title="Tenants" icon="" value={4} />
+          </div>
+          <div className="border mt-3 border-primary rounded-xl min-h-64">
+            charts
+          </div>
+        </div>
       </div>
     </section>
   );

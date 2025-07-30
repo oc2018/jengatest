@@ -25,7 +25,7 @@ const Sidebar: React.FC = () => {
   //   }
   // }, [data, isLoading]);
   const me = user?.user;
-  console.log(user);
+  // console.log(user);
 
   return (
     <div className="sidebar">
